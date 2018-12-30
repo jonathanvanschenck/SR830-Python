@@ -3,6 +3,41 @@ import numpy as np
 rm = visa.ResourceManager()
 
 class SR830:
+	"""
+	This class is used for controlling a Standford Research SR830 Lock-in Amplifier over a 
+	GPIB connection.
+	Initalization Variables:
+	resourceLoc:		String containing the hardward location of the GPIB connection. 
+				  This location should be visable from the SR830 front panel by
+				  pressing the "port" button.
+	
+	Variables:
+	.inst:			A container holding the pyVISA connection to the SR830 hardware via GPIB
+	.sens:			A dictionary which converts the name of a senstivity range into its
+				  corresponding index inside the SR830 serial. (i.e. "500nV" is index "7")
+	.volt:			A list of the same senstivities expressed as floats in units of volts
+#	.rmod:			A dictionary which converts the name of a filtering option into
+#				  its coreesponding index inside of the SR830 serial.
+	.oflt:			A dictionary which converts the name of an integration time (time constant)
+				  into its corresponding index inside the SR830 serial (i.e. "1ms" is "4")
+	.time:			A list of the same integration times expressed as floats in units of seconds
+	.it:			A float: the current integration time (time constant) in units of seconds
+	.v:			A float: the current sensitivity in units of volts
+	
+	Methods:
+	.setIT(name,i):		Sets the integration time (time constant) of the SR830 using EITHER "name" or "i".
+				  Default is to set IT to 1sec. 
+	.getIT():		a
+	.setSens(name,i):	a
+	.getSens():		a
+	.setSync(i):		a
+	.getSync():		a
+	.getFreq():		a
+	.getOut(i):		a
+	.getRTh():		a
+	.getXY():		a
+	.close():		a
+	"""
 	def __init__(self,resourceLoc="GPIB0::8::INSTR"):
 		self.inst = rm.open_resource(resourceLoc)
 		print("Connected to: ")
@@ -25,7 +60,7 @@ class SR830:
 					 0.002, 0.005, 0.01,
 					 0.02, 0.05, 0.1,
 					 0.2, 0.5, 1.0]
-		self.rmod = {"High Reserve":"0","Normal":"1","Low Noise":"2"}
+		#self.rmod = {"High Reserve":"0","Normal":"1","Low Noise":"2"}
 		self.oflt = {"10us":"0","30us":"1","100us":"2",
 					 "300us":"3","1ms":"4","3ms":"5",
 					 "10ms":"6","30ms":"7","100ms":"8",
