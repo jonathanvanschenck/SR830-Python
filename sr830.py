@@ -39,6 +39,8 @@ class SR830:
 	.getOut(i):		Returns a float with the measured locked in frequency component: X, Y, R or Phase (i=1,2,3,4)
 	.getRTh():		Returns a numpy array with measured locked in amplitude and phase: [R(V),Th(Deg)]
 	.getXY():		Returns a numpy array with measured locked in X and Y components: [X(V),X(Deg)]
+	.write(message,q):	Wrapper for pyVisa inst.query(message) if q=True or inst.write(message) if q=False.
+				  Default is to for q=False. See manual for details.
 	.close():		Closes the pyVisa connection to the SR830
 	"""
 	def __init__(self,resourceLoc="GPIB0::8::INSTR"):
@@ -155,6 +157,10 @@ class SR830:
 	def getXY(self):
 		return(np.array([float(self.inst.query("OUTP? "+str(1))),float(self.inst.query("OUTP? "+str(2)))]))
 	
-	
+	def write(self,message,q=False):
+		if q:
+			self.inst.query(str(message))
+		else:
+			self.inst.write(str(message))
 	def close(self):
 		self.inst.close()
