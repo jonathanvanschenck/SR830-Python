@@ -26,17 +26,20 @@ class SR830:
 	
 	Methods:
 	.setIT(name,i):		Sets the integration time (time constant) of the SR830 using EITHER "name" or "i".
+				  "name" must be a string found in .oflt.keys() and i=0..26. Providing "name" will
+				  superceed "i." Default is to set IT to 1sec. 
+	.getIT():		Returns a string containing the unit converted integration time (contrast with .it)
+	.setSens(name,i):	Sets the voltage sensitivity of the SR830 using EITHER "name" or "i". "name" must be 
+				  a string found in .oflt.keys() and i=0..26. Providing "name" will superceed "i." 
 				  Default is to set IT to 1sec. 
-	.getIT():		a
-	.setSens(name,i):	a
-	.getSens():		a
-	.setSync(i):		a
-	.getSync():		a
-	.getFreq():		a
-	.getOut(i):		a
-	.getRTh():		a
-	.getXY():		a
-	.close():		a
+	.getSens():		Returns a string containing the unit converted sensitivity (contrast with .v)
+	.setSync(i):		Allows sync filtering to be turned on or off (i=1 or 0)
+	.getSync():		Returns a string specifying if the sync filter is on or off
+	.getFreq():		Returns a float with the current sync frequency in Hz
+	.getOut(i):		Returns a float with the measured locked in frequency component: X, Y, R or Phase (i=1,2,3,4)
+	.getRTh():		Returns a numpy array with measured locked in amplitude and phase: [R(V),Th(Deg)]
+	.getXY():		Returns a numpy array with measured locked in X and Y components: [X(V),X(Deg)]
+	.close():		Closes the pyVisa connection to the SR830
 	"""
 	def __init__(self,resourceLoc="GPIB0::8::INSTR"):
 		self.inst = rm.open_resource(resourceLoc)
